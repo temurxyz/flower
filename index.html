@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Секретная жизнь одного цветка</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600;1,700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+@property --c1{syntax:'<color>';inherits:true;initial-value:#2a1020}
+@property --c2{syntax:'<color>';inherits:true;initial-value:#8a3a2a}
+@property --c3{syntax:'<color>';inherits:true;initial-value:#f0a050}
+:root{--cream:#fff1dc;--gold:#ffc861;--ink:#3a1810}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#12070b;color:var(--cream);font-family:'Nunito','Trebuchet MS',sans-serif}
+#bg{position:fixed;inset:0;background:linear-gradient(180deg,var(--c1),var(--c2) 58%,var(--c3));transition:--c1 2.4s ease,--c2 2.4s ease,--c3 2.4s ease}
+#sun{position:fixed;z-index:1;width:56vmax;height:56vmax;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,228,150,.95) 0,rgba(255,170,80,.45) 22%,rgba(255,120,60,0) 62%);mix-blend-mode:screen;pointer-events:none;transition:left 3s ease,top 3s ease,opacity 2.4s}
+#hills{position:fixed;z-index:1;left:0;bottom:0;width:100%;height:36vh}
+#scrim{position:fixed;inset:0;z-index:1;background:linear-gradient(90deg,rgba(22,6,12,.72),rgba(22,6,12,.35) 45%,transparent 75%)}
+#stage{position:fixed;z-index:2;bottom:0;right:5vw;height:100vh;aspect-ratio:400/620}
+#plant{width:100%;height:100%;overflow:visible;transition:transform 3.2s cubic-bezier(.6,0,.2,1),transform-origin 3.2s cubic-bezier(.6,0,.2,1)}
+#plant *{transition:transform 3s cubic-bezier(.5,0,.2,1),stroke-dashoffset 3s cubic-bezier(.5,0,.2,1),opacity 2s,filter 3s}
+.ol{stroke:var(--ink);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.stm,.rt{fill:none;stroke-dasharray:1 2;stroke-dashoffset:1.02}
+.rt{stroke:#f2d3a0;stroke-width:4;stroke-linecap:round}
+#sway{transform-origin:200px 480px;animation:sway 7s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-1.3deg)}to{transform:rotate(1.3deg)}}
+#pl{transform-origin:200px 480px}#l1{transform-origin:200px 400px}#l2{transform-origin:200px 335px}
+#hd,.pw,.pt{transform-origin:200px 210px}#sp{transform-origin:330px 480px}
+#bee{animation:bee 9s ease-in-out infinite}
+@keyframes bee{25%{transform:translate(-70px,28px)}50%{transform:translate(-120px,-18px)}75%{transform:translate(-50px,-46px)}}
+.wing{animation:fl .12s infinite alternate;transform-origin:0 0}
+@keyframes fl{to{transform:scaleY(.4)}}
+#fx{position:fixed;inset:0;z-index:3;pointer-events:none}
+.scene{position:fixed;inset:0;z-index:5;display:flex;align-items:center;padding:12vh 7vw;visibility:hidden;pointer-events:none;transition:visibility 0s .8s}
+.scene.on{visibility:visible;pointer-events:auto;transition-delay:0s}
+.txt{max-width:620px}.txt>*{margin-bottom:18px}
+.rv{opacity:0;filter:blur(12px);transition:opacity .5s,filter .5s}
+.scene.on .rv{opacity:1;filter:none;transition:opacity 1.4s ease,filter 1.4s ease;transition-delay:calc(.9s + var(--i)*.14s)}
+.ch{font-weight:800;font-size:.95rem;color:var(--gold);letter-spacing:.04em}
+h1,h2{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:700;line-height:1;text-shadow:0 4px 30px rgba(20,4,8,.55)}
+h1{font-size:clamp(3.2rem,8.5vw,7.4rem)}
+h2{font-size:clamp(2.3rem,4.8vw,4.2rem)}
+p{font-size:1.1rem;line-height:1.65;color:rgba(255,241,220,.92);max-width:52ch}
+.big{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.7rem;line-height:1.3;color:var(--gold)}
+.card,li.card{list-style:none;background:rgba(36,12,16,.55);border:2px solid #3a1810;border-radius:20px;padding:13px 16px;box-shadow:4px 4px 0 rgba(30,8,8,.6);backdrop-filter:blur(6px);font-size:.98rem;line-height:1.5}
+.card b{display:block;font-size:1.08rem;color:var(--gold);margin-bottom:3px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col{display:grid;gap:12px}
+.npk{display:grid;grid-template-columns:58px 1fr;gap:14px;align-items:center}
+.npk i{font:700 2.2rem 'Cormorant Garamond',serif;width:58px;height:58px;border-radius:50%;background:var(--gold);color:var(--ink);border:3px solid var(--ink);display:grid;place-items:center}
+table{border-collapse:separate;border-spacing:0 10px;width:100%;font-size:.93rem}
+th{text-align:left;color:var(--gold);padding:0 12px 2px}
+td{background:rgba(36,12,16,.55);padding:12px;vertical-align:top;line-height:1.4}
+td:first-child{border-radius:16px 0 0 16px;font:700 1.5rem 'Cormorant Garamond',serif;color:var(--gold);text-align:center}
+td:last-child{border-radius:0 16px 16px 0}
+button.re{font:800 1rem 'Nunito';background:var(--gold);color:var(--ink);border:3px solid var(--ink);border-radius:30px;padding:11px 24px;box-shadow:4px 4px 0 rgba(30,8,8,.6);cursor:pointer}
+.hint{font-size:.95rem;opacity:.8}
+#ui{position:fixed;z-index:9;left:7vw;bottom:8vh;display:flex;gap:7px;align-items:center}
+#ui button{width:10px;height:10px;border-radius:6px;border:0;background:rgba(255,241,220,.4);cursor:pointer;transition:width .6s,background .6s}
+#ui button.a{width:30px;background:var(--gold)}
+#ui button:focus-visible,button.re:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#ct{margin-left:12px;font-size:.9rem;opacity:.85}
+.bar{position:fixed;left:0;right:0;height:50vh;background:#000;z-index:8;transition:height 2.6s cubic-bezier(.7,0,.2,1)}
+.bar.t{top:0}.bar.b{bottom:0}body.ready .bar{height:5.5vh}
+#vig{position:fixed;inset:0;z-index:6;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(15,3,8,.6))}
+#grain{position:fixed;inset:-10%;z-index:6;pointer-events:none;opacity:.09;mix-blend-mode:overlay;animation:gr .8s steps(5) infinite;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+@keyframes gr{25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}to{transform:translate(3%,3%)}}
+#leak{position:fixed;inset:0;z-index:7;opacity:0;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(circle at 70% 60%,rgba(255,190,110,.6),transparent 62%)}
+@media(max-width:820px){
+.scene{align-items:flex-start;padding:14vh 6vw 20vh;overflow-y:auto}
+#stage{right:auto;left:50%;translate:-50% 0;opacity:.8}
+#scrim{background:linear-gradient(180deg,rgba(22,6,12,.78),rgba(22,6,12,.6) 65%,rgba(22,6,12,.25))}
+.g2{grid-template-columns:1fr}#ui{left:6vw}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="bg"></div><div id="sun"></div>
+<svg id="hills" viewBox="0 0 1000 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120 C150 40 300 90 450 70 S750 20 1000 90 V200H0Z" fill="rgba(40,10,24,.4)"/><path d="M0 150 C200 90 350 140 560 110 S850 80 1000 130 V200H0Z" fill="rgba(30,8,18,.55)"/></svg>
+<div id="scrim"></div>
+
+<div id="stage" aria-hidden="true">
+<svg id="plant" viewBox="0 0 400 620">
+<defs>
+<linearGradient id="soil" gradientUnits="userSpaceOnUse" x1="0" y1="480" x2="0" y2="620"><stop offset="0" stop-color="#b8662f"/><stop offset=".35" stop-color="#6a3320"/><stop offset="1" stop-color="#241009"/></linearGradient>
+<linearGradient id="pa" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#e8452f"/><stop offset="1" stop-color="#ffa45a"/></linearGradient>
+<linearGradient id="pb" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff9a3a"/><stop offset="1" stop-color="#ffe07a"/></linearGradient>
+<linearGradient id="lf" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#4f7a2e"/><stop offset="1" stop-color="#a8c850"/></linearGradient>
+<radialGradient id="gl"><stop offset="0" stop-color="#ffe9a0" stop-opacity=".9"/><stop offset="1" stop-color="#ffb050" stop-opacity="0"/></radialGradient>
+<path id="tuft" class="ol" fill="#7da03a" d="M0 0 L-6 -26 L2 -10 L6 -32 L10 -10 L18 -24 L14 0Z"/>
+</defs>
+<g id="sway">
+<path class="ol" fill="url(#soil)" d="M-2500 480 C-1500 470 -800 490 -300 478 S150 482 200 480 S700 466 1200 480 S2200 475 2900 480 V1600 H-2500Z"/>
+<use href="#tuft" x="105" y="480"/><use href="#tuft" x="285" y="478"/><use href="#tuft" x="-40" y="482"/><use href="#tuft" x="390" y="480"/>
+<path class="rt" pathLength="1" d="M200 480 C192 520 172 556 150 596"/><path class="rt" pathLength="1" d="M200 480 C206 525 214 565 226 604"/>
+<path class="rt" pathLength="1" d="M200 495 C170 508 140 512 106 540"/><path class="rt" pathLength="1" d="M200 495 C232 508 262 514 296 538"/>
+<g id="seed"><ellipse class="ol" cx="200" cy="528" rx="17" ry="10" fill="#9a5426" transform="rotate(-18 200 528)"/><ellipse cx="195" cy="524" rx="6" ry="2.5" fill="#d79a5a" transform="rotate(-18 195 524)"/></g>
+<g id="sp"><path class="stm" style="stroke-dashoffset:0" pathLength="1" d="M330 480 V432" stroke="#3a1810" stroke-width="12" fill="none"/><path style="stroke-dashoffset:0" class="stm" pathLength="1" d="M330 480 V432" stroke="#78a63c" stroke-width="6"/>
+<path class="ol" fill="url(#lf)" d="M330 442 C312 424 298 428 290 434 C302 450 318 452 330 442Z"/><path class="ol" fill="url(#lf)" d="M330 438 C348 420 364 424 372 430 C360 446 344 448 330 438Z"/></g>
+<g id="pl">
+<path class="stm" pathLength="1" d="M200 480 V210" stroke="#3a1810" stroke-width="15"/>
+<path class="stm" pathLength="1" d="M200 480 V210" stroke="#78a63c" stroke-width="8"/>
+<g id="l1"><path class="ol" fill="url(#lf)" d="M200 400 C172 352 122 342 82 357 C102 402 162 422 200 400Z"/><path class="ol" fill="none" stroke-width="2" d="M200 400 Q142 376 92 360"/></g>
+<g id="l2"><path class="ol" fill="url(#lf)" d="M200 335 C228 287 278 277 318 292 C298 337 238 357 200 335Z"/><path class="ol" fill="none" stroke-width="2" d="M200 335 Q258 311 308 295"/></g>
+<g id="hd"><circle id="glow" cx="200" cy="210" r="160" fill="url(#gl)" opacity="0"/><g id="petals"></g>
+<circle class="ol" cx="200" cy="210" r="24" fill="#9a4f1c"/><g fill="#f0b040"><circle cx="192" cy="204" r="4"/><circle cx="208" cy="206" r="4"/><circle cx="200" cy="218" r="4"/><circle cx="190" cy="216" r="3"/><circle cx="210" cy="217" r="3"/></g><g id="sd"></g></g>
+</g>
+<g transform="translate(300 150)" id="beew" opacity="0"><g id="bee"><g class="wing"><ellipse cx="-3" cy="-9" rx="8" ry="4" fill="#fff" opacity=".8" transform="rotate(-30)"/></g><ellipse class="ol" rx="12" ry="8" fill="#ffc93a" stroke-width="2.5"/><path d="M-3 -7V7M4 -7V7" stroke="#3a1810" stroke-width="3"/><circle cx="-12" cy="-1" r="5" fill="#3a1810"/></g></g>
+</g>
+</svg>
+</div>
+
+<canvas id="fx"></canvas>
+
+<section class="scene"><div class="txt">
+<h1>Секретная жизнь одного цветка</h1>
+<p>От крошечного семени до последнего лепестка. Что на самом деле нужно, чтобы жить — и почему всё заканчивается.</p>
+<p class="hint">Листай колёсиком, стрелками или свайпом. Проектная работа: биология и экология.</p>
+</div></section>
+
+<section class="scene"><div class="txt">
+<h2>Большинство людей думают, что цветок просто «растёт».</h2>
+<p>На самом деле у него есть рождение, борьба за жизнь, выбор, ради чего цвести, и осознанная смерть.</p>
+<p class="big">Давай пройдём этот путь вместе.</p>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Глава 1. Рождение</p><h2>Я был семенем</h2>
+<div class="col grp">
+<div class="card"><b>Темнота</b>Внутри семени я спал. Вокруг — жёсткая оболочка и запас еды на первое время.</div>
+<div class="card"><b>Сигнал</b>Вода + тепло + воздух. Когда все трое сошлись — я проснулся.</div>
+<div class="card"><b>Первый шаг</b>Корешок вниз, росток вверх. Это не случайность — это программа выживания.</div></div>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Глава 2. Условия жизни</p><h2>Что мне нужно, чтобы жить</h2>
+<div class="g2 grp">
+<div class="card"><b>☀ Свет</b>Энергия. Без него я не могу делать еду из воздуха (фотосинтез).</div>
+<div class="card"><b>💧 Вода</b>Транспорт веществ. Слишком мало — засыхаю. Слишком много — корни гниют.</div>
+<div class="card"><b>🌡 Тепло</b>Обычно +18…25 °C. Мороз или жара выше 35–40 °C — почти смерть.</div>
+<div class="card"><b>🌍 Почва</b>Рыхлая, с воздухом и питанием. Глина или чистый песок — тюрьма для корней.</div></div>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Глава 3. Что меня убивает</p><h2>Я не расту, когда…</h2>
+<div class="g2 grp">
+<div class="card"><b>Темнота</b>Нет света → нет энергии → я останавливаюсь.</div>
+<div class="card"><b>Засуха или болото</b>Оба варианта убивают корни по-разному.</div>
+<div class="card"><b>Холод / Жара</b>Клетки разрушаются. Я не могу «переждать».</div>
+<div class="card"><b>Голод или отравление</b>Нет питания — или слишком много удобрений.</div>
+<div class="card"><b>Спёртый воздух</b>Корням тоже нужен кислород.</div>
+<div class="card"><b>Болезни и вредители</b>Если я слабый — они приходят первыми.</div></div>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Глава 4. Моя еда</p><h2>Три главных «витамина»</h2>
+<p>Людям они известны как удобрения. Для меня это — строительный материал, энергия и защита.</p>
+<div class="col grp">
+<div class="card npk"><i>N</i><span><b>Азот — строитель зелени</b>Листья, стебли, рост. Без него я бледный и слабый.</span></div>
+<div class="card npk"><i>P</i><span><b>Фосфор — энергия и корни</b>Корни, цветы, семена. Без него я не могу цвести по-настоящему.</span></div>
+<div class="card npk"><i>K</i><span><b>Калий — защитник</b>Иммунитет, качество цветов, устойчивость к стрессу.</span></div></div>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Глава 4. Моя еда, продолжение</p><h2>Что будет, если ошибиться</h2>
+<table class="grp"><thead><tr><th></th><th>Когда хватает</th><th>Когда слишком много / мало</th></tr></thead><tbody>
+<tr><td>N</td><td>Много зелени, быстрый рост, хороший урожай</td><td>Мало цветов. Растение «жирует» — всё в листья</td></tr>
+<tr><td>P</td><td>Сильные корни, обильное цветение, семена</td><td>Слабые корни, редкие цветы, мало потомства</td></tr>
+<tr><td>K</td><td>Крепкие стебли, яркие цветы, устойчивость</td><td>Ломкие стебли, бледные цветы, болезни</td></tr></tbody></table>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Глава 5. Цветение</p><h2>Зачем я вообще цвету?</h2>
+<p class="big">Не для красоты. Красота — побочный эффект.</p>
+<p>Моя настоящая цель — привлечь опылителей и оставить после себя семена.</p>
+<p>Всё остальное (форма, цвет, запах) — это реклама для пчёл, бабочек и ветра.</p>
+<p>Цветение — это мой максимум. После него я могу умереть спокойно.</p>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Глава 6. Смерть и возвращение</p><h2>Я умираю, но не исчезаю</h2>
+<div class="col grp">
+<div class="card"><b>Однолетники</b>После цветения и образования семян всё растение отмирает. Я выполнил задачу — оставил потомство. Тело становится удобрением для следующего поколения.</div>
+<div class="card"><b>Многолетники</b>Надземная часть может умереть, но корни и почки остаются. Я ухожу в сон до следующего сезона. Смерть — временная. Весной я возвращаюсь.</div></div>
+</div></section>
+
+<section class="scene"><div class="txt">
+<p class="ch">Главное</p><h2>Цветок — не декорация. Это стратегия выживания.</h2>
+<p>Он рождается из семени, борется за свет, воду и питание, тратит всё на один момент цветения — и оставляет семена.</p>
+<p>Азот строит тело. Фосфор даёт силу цвести. Калий защищает. А баланс решает, выживет ли он вообще.</p>
+<p class="big">Теперь ты знаешь больше, чем просто «поливать и удобрять».</p>
+<button class="re" id="again">Смотреть сначала</button>
+</div></section>
+
+<nav id="ui" aria-label="Сцены"><span id="ct"></span></nav>
+<div id="vig"></div><div id="grain"></div><div id="leak"></div>
+<div class="bar t"></div><div class="bar b"></div>
+
+<script>
+const $=s=>document.querySelector(s),NS='http://www.w3.org/2000/svg',R=Math.random;
+const sc=[...document.querySelectorAll('.scene')],N=sc.length,svg=$('#plant'),ct=$('#ct');
+sc.forEach(s=>s.querySelectorAll('.txt>:not(.grp),.grp>:not(table):not(tbody):not(thead),.grp tr').forEach((e,i)=>{e.classList.add('rv');e.style.setProperty('--i',i)}));
+
+/* sceneries: [top, middle, bottom] colours, sun [x%, y%, opacity], camera [zoom, origin-y%], particle speed */
+const C=[['#2a1020','#8a3a2a','#f0a050'],['#3b1a24','#b0502f','#f5b45a'],['#1e0f14','#4a2118','#a85a2a'],['#5a2a2a','#e07a3a','#ffd27a'],['#1a0e14','#4a2a28','#8a5a3a'],['#4a1f2e','#d4642f','#ffc069'],['#3d1a2c','#c25a30','#f2a95a'],['#6a1e3a','#ff7a3d','#ffd98a'],['#2a1228','#a8402f','#f08a4a'],['#1c0e1e','#6a2a3a','#e8955a']];
+const SUN=[[72,72,.9],[70,62,.9],[60,105,.15],[75,24,1],[50,8,.15],[78,22,.9],[70,30,.9],[68,34,1],[75,74,1],[60,88,.8]];
+const CAM=[[2.4,82],[2,82],[1.3,72],[1.15,70],[1.2,70],[1,60],[1.1,55],[1.9,30],[1.6,36],[1,60]];
+const SP=[.3,.3,.12,.4,-.2,.4,.4,.9,-.35,-.4];
+const B={stem:0,leaf:0,root:0,open:0,hs:0,seed:0,fall:0,wilt:0,sd:0,sp:0,bee:0,glow:0};
+const ST=[{seed:1},{seed:1,root:.1},{root:.85,stem:.25,leaf:.3,hs:.3},{root:1,stem:.6,leaf:.85,hs:.45},
+{root:1,stem:.6,leaf:.5,hs:.45,wilt:.8},{root:1,stem:1,leaf:1,hs:.65,open:.1},{root:1,stem:1,leaf:1,hs:.8,open:.3},
+{root:1,stem:1,leaf:1,hs:1,open:1,glow:1,bee:1},{root:1,stem:1,leaf:.7,hs:1,open:1,fall:1,wilt:.7,sd:1},
+{root:1,stem:1,leaf:.5,hs:1,open:1,fall:2,wilt:1,sd:2,sp:1}];
+
+/* build petals (two rings) and seeds */
+const PD='M200 210 C176 178 176 130 200 98 C224 130 224 178 200 210Z',P=[],SD=[];
+function ring(n,sc,fill,off){for(let i=0;i<n;i++){let a=(i*360/n+off)%360;if(a>180)a-=360;
+ const w=document.createElementNS(NS,'g'),p=document.createElementNS(NS,'path');w.setAttribute('class','pw');p.setAttribute('d',PD);p.setAttribute('class','pt ol');p.setAttribute('fill',fill);
+ w.appendChild(p);$('#petals').appendChild(w);P.push({w,p,a,sc,dx:(R()-.5)*190,dy:250+R()*18,rot:(R()-.5)*170,t:2.4+R()*2,d:R()*.8})}}
+ring(10,1,'url(#pa)',0);ring(8,.68,'url(#pb)',22);
+for(let i=0;i<11;i++){const c=document.createElementNS(NS,'circle'),a=R()*6.28,r=R()*15;c.setAttribute('cx',200+Math.cos(a)*r);c.setAttribute('cy',210+Math.sin(a)*r);c.setAttribute('r',3);c.setAttribute('fill','#5a2e14');c.setAttribute('class','sdc');$('#sd').appendChild(c);SD.push({c,dx:120+R()*300,dy:-R()*280-30,d:R()*1.2})}
+
+function stage(s){
+ document.querySelectorAll('.stm:not(#sp .stm)').forEach(e=>e.style.strokeDashoffset=1.02-1.02*s.stem);
+ document.querySelectorAll('.rt').forEach(e=>e.style.strokeDashoffset=1.02-1.02*s.root);
+ $('#hd').style.transform=`translateY(${(1-s.stem)*270}px) scale(${s.hs})`;
+ $('#l1').style.transform=`rotate(${-32*s.wilt}deg) scale(${s.leaf})`;
+ $('#l2').style.transform=`rotate(${32*s.wilt}deg) scale(${s.leaf})`;
+ $('#pl').style.transform=`rotate(${14*s.wilt}deg)`;
+ $('#pl').style.filter=`saturate(${1-.55*s.wilt}) brightness(${1-.2*s.wilt})`;
+ $('#seed').style.opacity=s.seed;$('#glow').style.opacity=s.glow;$('#beew').style.opacity=s.bee;
+ $('#sp').style.transform=`scale(${s.sp})`;$('#sp').style.opacity=s.sp;
+ P.forEach(o=>{const f=s.fall;o.p.style.transform=`rotate(${o.a*s.open}deg) scale(${o.sc*(.85+.15*s.open)})`;
+  o.w.style.transitionDuration=f?o.t+'s':'';o.w.style.transitionDelay=f?o.d+'s':'0s';
+  o.w.style.transform=f?`translate(${o.dx}px,${o.dy}px) rotate(${o.rot}deg)`:'none';o.w.style.opacity=f==2?.45:1});
+ SD.forEach(o=>{const c=o.c.style;c.transitionDuration=s.sd==2?'5s':'2s';c.transitionDelay=s.sd==2?o.d+'s':'1.5s';
+  c.opacity=s.sd==1?1:0;c.transform=s.sd==2?`translate(${o.dx}px,${o.dy}px)`:'none'})}
+
+/* drifting light: dust, pollen, falling embers */
+const cv=$('#fx'),cx=cv.getContext('2d');let W,H,sp=.3,tsp=.3,pl=0,tpl=0;
+const PT=Array.from({length:70},()=>({x:R(),y:R(),r:.6+R()*2.2,v:.3+R()*1.1,t:R()*6,a:.2+R()*.5}));
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener('resize',rs);
+function tick(){sp+=(tsp-sp)*.02;pl+=(tpl-pl)*.02;cx.clearRect(0,0,W,H);cx.globalCompositeOperation='lighter';
+ for(const p of PT){p.y-=p.v*sp/H*2.2;p.t+=.012;p.x+=Math.sin(p.t)*.0004;if(p.y<-.02)p.y=1.02;if(p.y>1.02)p.y=-.02;
+  cx.fillStyle=`rgba(255,${200+pl*30|0},${140-pl*50|0},${p.a*(1+pl*.9)})`;cx.beginPath();cx.arc(p.x*W,p.y*H,p.r*(1+pl*.7),0,6.28);cx.fill()}
+ requestAnimationFrame(tick)}tick();
+
+/* navigation */
+let cur=-1,lock=0;const bg=$('#bg'),sun=$('#sun'),leak=$('#leak'),dots=[];
+sc.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Сцена '+(i+1));b.onclick=()=>go(i);$('#ui').insertBefore(b,ct);dots.push(b)});
+svg.style.transformOrigin='50% 82%';svg.style.transform='scale(2.4)';
+function show(n){cur=n;sc.forEach((s,i)=>s.classList.toggle('on',i==n));dots.forEach((d,i)=>d.classList.toggle('a',i==n));ct.textContent=(n+1)+' / '+N;
+ C[n].forEach((c,i)=>bg.style.setProperty('--c'+(i+1),c));
+ sun.style.left=SUN[n][0]+'%';sun.style.top=SUN[n][1]+'%';sun.style.opacity=SUN[n][2];
+ svg.style.transformOrigin='50% '+CAM[n][1]+'%';svg.style.transform=`scale(${CAM[n][0]})`;
+ stage({...B,...ST[n]});tsp=SP[n];tpl=n==7?1:0;
+ leak.animate([{opacity:0},{opacity:1},{opacity:0}],{duration:1600,easing:'ease-in-out'})}
+function go(n){n=Math.max(0,Math.min(N-1,n));if(n===cur||Date.now()<lock)return;lock=Date.now()+1500;show(n)}
+addEventListener('wheel',e=>{e.preventDefault();if(Math.abs(e.deltaY)>10)go(cur+(e.deltaY>0?1:-1))},{passive:false});
+addEventListener('keydown',e=>{const k=e.key;if(['ArrowDown','ArrowRight','PageDown',' '].includes(k)){e.preventDefault();go(cur+1)}
+ else if(['ArrowUp','ArrowLeft','PageUp'].includes(k)){e.preventDefault();go(cur-1)}else if(k=='Home')go(0);else if(k=='End')go(N-1)});
+let ty=0;addEventListener('touchstart',e=>ty=e.touches[0].clientY,{passive:true});
+addEventListener('touchend',e=>{const d=ty-e.changedTouches[0].clientY;if(Math.abs(d)>60)go(cur+(d>0?1:-1))});
+$('#again').onclick=()=>{lock=0;go(0)};
+stage({...B,seed:1});
+setTimeout(()=>document.body.classList.add('ready'),300);
+setTimeout(()=>show(0),1000);
+</script>
+</body>
+</html>
